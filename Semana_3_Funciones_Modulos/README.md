@@ -1,6 +1,6 @@
-# 📙 Semana 3: Funciones y Módulos
+# Semana 3: Funciones y Módulos
 
-## 🎯 Objetivos de Aprendizaje
+## Objetivos de Aprendizaje
 
 Al finalizar esta semana, serás capaz de:
 
@@ -11,7 +11,7 @@ Al finalizar esta semana, serás capaz de:
 - ✅ Organizar código en módulos y paquetes
 - ✅ Manejar errores y excepciones apropiadamente
 
-## 📚 Contenido
+## Contenido
 
 ### Notebook 1: Funciones
 - Definición de funciones (def)
@@ -39,7 +39,7 @@ Al finalizar esta semana, serás capaz de:
 - Tipos de excepciones
 - Raise y excepciones personalizadas
 
-## 🎓 Ejercicios
+## Ejercicios
 
 Los ejercicios de esta semana se encuentran en la carpeta `ejercicios/`:
 
@@ -49,19 +49,19 @@ Los ejercicios de esta semana se encuentran en la carpeta `ejercicios/`:
 4. **Ejercicio 4:** Funciones de orden superior aplicadas
 5. **Ejercicio 5:** Decorador para medir tiempo de ejecución
 
-## 📊 Material de Apoyo
+## Material de Apoyo
 
 - **Presentación:** `presentaciones/Semana3_Funciones_Modulos.pdf`
 - **Datos de práctica:** `datos/` (módulos de ejemplo)
 
-## 🔗 Recursos Adicionales
+## Recursos Adicionales
 
 - [Funciones en Python](https://docs.python.org/es/3/tutorial/controlflow.html#defining-functions)
 - [Módulos en Python](https://docs.python.org/es/3/tutorial/modules.html)
 - [Errores y excepciones](https://docs.python.org/es/3/tutorial/errors.html)
 - [PEP 257 - Docstring Conventions](https://www.python.org/dev/peps/pep-0257/)
 
-## ⏱️ Tiempo Estimado
+## ⏱Tiempo Estimado
 
 - **Lectura y práctica:** 6-8 horas
 - **Ejercicios:** 4-5 horas
@@ -76,7 +76,7 @@ Los ejercicios de esta semana se encuentran en la carpeta `ejercicios/`:
 - [ ] Comprendo el manejo de excepciones con try-except
 - [ ] He completado todos los ejercicios
 
-## 💡 Conceptos Clave
+## Conceptos Clave
 
 ```python
 # Función básica
@@ -100,7 +100,7 @@ import math
 print(math.pi)
 ```
 
-## 🎯 Buenas Prácticas
+## Buenas Prácticas
 
 1. **Funciones pequeñas:** Una función debe hacer una cosa y hacerla bien
 2. **Nombres descriptivos:** `calcular_promedio()` es mejor que `calc()`
@@ -108,7 +108,7 @@ print(math.pi)
 4. **Maneja errores:** Prevé situaciones excepcionales
 5. **DRY:** Don't Repeat Yourself - reutiliza código
 
-## 🚀 Próximos Pasos
+## Próximos Pasos
 
 ¡Estás casi listo! La próxima semana aplicarás todo lo aprendido en la [Semana 4: Proyecto Final](../Semana_4_Proyecto_Final/), donde construirás una aplicación completa.
 

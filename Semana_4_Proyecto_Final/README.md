@@ -1,6 +1,6 @@
-# 🎓 Semana 4: Proyecto Final
+# Semana 4: Proyecto Final
 
-## 🎯 Objetivos de Aprendizaje
+## Objetivos de Aprendizaje
 
 Al finalizar esta semana, serás capaz de:
 
@@ -36,11 +36,11 @@ Al finalizar esta semana, serás capaz de:
 - Documentación
 - Optimización y refactorización
 
-## 🚀 Proyectos Sugeridos
+## Proyectos Sugeridos
 
 Elige uno de estos proyectos o propón el tuyo:
 
-### 1. 📊 Analizador de Datos
+### 1. Analizador de Datos
 Analiza un conjunto de datos (ventas, clima, etc.):
 - Carga datos desde CSV
 - Limpia y procesa información
@@ -48,7 +48,7 @@ Analiza un conjunto de datos (ventas, clima, etc.):
 - Genera gráficos
 - Exporta resultados
 
-### 2. 📝 Sistema de Gestión
+### 2. Sistema de Gestión
 Crea un sistema (biblioteca, inventario, contactos):
 - CRUD completo (Crear, Leer, Actualizar, Eliminar)
 - Persistencia en archivos
@@ -56,7 +56,7 @@ Crea un sistema (biblioteca, inventario, contactos):
 - Validación de datos
 - Reportes
 
-### 3. 🎮 Juego Interactivo
+### 3. Juego Interactivo
 Desarrolla un juego en consola:
 - Adivinanza de números
 - Ahorcado
@@ -64,14 +64,14 @@ Desarrolla un juego en consola:
 - Sistema de puntuación
 - Guardar récords
 
-### 4. 🌐 Web Scraper Simple
+### 4. Web Scraper Simple
 Extrae información de sitios web:
 - Usa requests para obtener HTML
 - Procesa datos
 - Almacena resultados
 - Genera reportes
 
-## 📋 Requisitos del Proyecto
+## Requisitos del Proyecto
 
 Tu proyecto debe incluir:
 
@@ -82,27 +82,27 @@ Tu proyecto debe incluir:
 - [ ] **Datos de prueba:** Al menos un ejemplo funcional
 - [ ] **Buenas prácticas:** Sigue PEP 8
 
-## 📊 Material de Apoyo
+## Material de Apoyo
 
 - **Presentación:** `presentaciones/Semana4_Proyecto_Final.pdf`
 - **Datos de práctica:** `datos/` (datasets de ejemplo)
 - **Templates:** Plantillas de código para empezar
 
-## 🔗 Recursos Adicionales
+## Recursos Adicionales
 
 - [Pandas Documentation](https://pandas.pydata.org/docs/)
 - [Matplotlib Tutorials](https://matplotlib.org/stable/tutorials/index.html)
 - [Real Python Projects](https://realpython.com/tutorials/projects/)
 - [Python Project Ideas](https://github.com/topics/python-projects)
 
-## ⏱️ Tiempo Estimado
+## Tiempo Estimado
 
 - **Planificación:** 1-2 horas
 - **Implementación:** 8-12 horas
 - **Testing y documentación:** 2-3 horas
 - **Total:** 11-17 horas
 
-## ✅ Checklist de Entrega
+## Checklist de Entrega
 
 ### Fase 1: Planificación
 - [ ] Proyecto seleccionado
@@ -121,7 +121,7 @@ Tu proyecto debe incluir:
 - [ ] Testing realizado
 - [ ] Proyecto funcional
 
-## 💡 Estructura Sugerida del Proyecto
+## Estructura Sugerida del Proyecto
 
 ```
 mi_proyecto/
@@ -143,7 +143,7 @@ mi_proyecto/
     └── test_main.py
 ```
 
-## 🎯 Criterios de Evaluación
+## Criterios de Evaluación
 
 Tu proyecto será evaluado en:
 
@@ -152,7 +152,7 @@ Tu proyecto será evaluado en:
 3. **Creatividad (15%):** ¿Es original e interesante?
 4. **Presentación (15%):** ¿Es fácil de entender y usar?
 
-## 🏆 Entrega del Proyecto
+## Entrega del Proyecto
 
 ### Formato:
 - Repositorio GitHub (recomendado) o carpeta comprimida
@@ -168,7 +168,7 @@ Tu proyecto será evaluado en:
    - Cómo usar el programa
    - Ejemplos de uso
 
-## 🎉 ¡Felicidades!
+## ¡Felicidades!
 
 Al completar este proyecto, habrás:
 - ✅ Dominado los fundamentos de Python
@@ -176,7 +176,7 @@ Al completar este proyecto, habrás:
 - ✅ Aplicado buenas prácticas de programación
 - ✅ Construido un portafolio inicial
 
-## 🚀 Próximos Pasos
+## Próximos Pasos
 
 Después de completar el bootcamp:
 
@@ -186,7 +186,7 @@ Después de completar el bootcamp:
 4. **Contribuye:** Proyectos open source en GitHub
 5. **Comparte:** Tu conocimiento con otros
 
-## 📧 Soporte
+## Soporte
 
 ¿Necesitas ayuda con tu proyecto?
 - Revisa los notebooks anteriores

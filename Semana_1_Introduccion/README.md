@@ -1,6 +1,6 @@
-# 📘 Semana 1: Introducción a Python
+# Semana 1: Introducción a Python
 
-## 🎯 Objetivos de Aprendizaje
+## Objetivos de Aprendizaje
 
 Al finalizar esta semana, serás capaz de:
 
@@ -11,7 +11,7 @@ Al finalizar esta semana, serás capaz de:
 - ✅ Usar operadores aritméticos, de comparación y lógicos
 - ✅ Manejar entrada y salida de datos
 
-## 📚 Contenido
+## Contenido
 
 ### Notebook 1: Introducción y Primeros Pasos
 - ¿Qué es Python?
@@ -37,7 +37,7 @@ Al finalizar esta semana, serás capaz de:
 - Prioridad de operadores
 - Entrada y salida con input() y print()
 
-## 🎓 Ejercicios
+## Ejercicios
 
 Los ejercicios de esta semana se encuentran en la carpeta `ejercicios/`:
 
@@ -45,18 +45,18 @@ Los ejercicios de esta semana se encuentran en la carpeta `ejercicios/`:
 2. **Ejercicio 2:** Convertidor de unidades
 3. **Ejercicio 3:** Programa de bienvenida personalizado
 
-## 📊 Material de Apoyo
+## Material de Apoyo
 
 - **Presentación:** `presentaciones/Semana1_Introduccion.pdf`
 - **Datos de práctica:** `datos/` (si aplica)
 
-## 🔗 Recursos Adicionales
+## Recursos Adicionales
 
 - [Documentación oficial de Python](https://docs.python.org/es/3/)
 - [Tutorial oficial de Python en español](https://docs.python.org/es/3/tutorial/)
 - [PEP 8 - Guía de estilo de Python](https://pep8.org/)
 
-## ⏱️ Tiempo Estimado
+##  Tiempo Estimado
 
 - **Lectura y práctica:** 4-6 horas
 - **Ejercicios:** 2-3 horas
@@ -70,7 +70,7 @@ Los ejercicios de esta semana se encuentran en la carpeta `ejercicios/`:
 - [ ] He completado todos los ejercicios
 - [ ] He practicado con input() y print()
 
-## 🚀 Próximos Pasos
+## Próximos Pasos
 
 Una vez completes esta semana, estarás listo para la [Semana 2: Estructuras de Control](../Semana_2_Estructuras_Control/), donde aprenderás a controlar el flujo de tus programas con condicionales y bucles.
 

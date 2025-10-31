@@ -1,6 +1,6 @@
-# 📗 Semana 2: Estructuras de Control
+# Semana 2: Estructuras de Control
 
-## 🎯 Objetivos de Aprendizaje
+## Objetivos de Aprendizaje
 
 Al finalizar esta semana, serás capaz de:
 
@@ -10,7 +10,7 @@ Al finalizar esta semana, serás capaz de:
 - ✅ Aplicar comprehensions para código más elegante
 - ✅ Controlar el flujo de ejecución con break, continue y pass
 
-## 📚 Contenido
+## Contenido
 
 ### Notebook 1: Condicionales
 - Sentencias if, elif, else
@@ -35,7 +35,7 @@ Al finalizar esta semana, serás capaz de:
 - List/Dict/Set comprehensions
 - Métodos útiles de colecciones
 
-## 🎓 Ejercicios
+## Ejercicios
 
 Los ejercicios de esta semana se encuentran en la carpeta `ejercicios/`:
 
@@ -45,18 +45,18 @@ Los ejercicios de esta semana se encuentran en la carpeta `ejercicios/`:
 4. **Ejercicio 4:** Agenda de contactos (diccionarios)
 5. **Ejercicio 5:** Comprehensions avanzadas
 
-## 📊 Material de Apoyo
+## Material de Apoyo
 
 - **Presentación:** `presentaciones/Semana2_Estructuras_Control.pdf`
 - **Datos de práctica:** `datos/` (archivos CSV, JSON, etc.)
 
-## 🔗 Recursos Adicionales
+## Recursos Adicionales
 
 - [Listas en Python - Documentación](https://docs.python.org/es/3/tutorial/datastructures.html)
 - [Estructuras de control de flujo](https://docs.python.org/es/3/tutorial/controlflow.html)
 - [Comprehensions en Python](https://www.python.org/dev/peps/pep-0202/)
 
-## ⏱️ Tiempo Estimado
+## Tiempo Estimado
 
 - **Lectura y práctica:** 5-7 horas
 - **Ejercicios:** 3-4 horas
@@ -71,7 +71,7 @@ Los ejercicios de esta semana se encuentran en la carpeta `ejercicios/`:
 - [ ] Puedo escribir comprehensions básicas
 - [ ] He completado todos los ejercicios
 
-## 💡 Conceptos Clave
+## Conceptos Clave
 
 ```python
 # Condicional
@@ -91,7 +91,7 @@ cuadrados = [x**2 for x in range(10)]
 persona = {"nombre": "Ana", "edad": 25}
 ```
 
-## 🚀 Próximos Pasos
+## Próximos Pasos
 
 La próxima semana aprenderás sobre [Semana 3: Funciones y Módulos](../Semana_3_Funciones_Modulos/), donde escribirás código reutilizable y modular.
 
