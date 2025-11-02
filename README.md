@@ -111,10 +111,9 @@ Cada semana sigue esta estructura:
 
 ## 📧 Contacto
 
-- **Instructor:** [Tu Nombre]
-- **Email:** [tu-email@ejemplo.com]
-- **LinkedIn:** [Tu perfil de LinkedIn]
-
+- **Instructor:** César A. Ponce Diego
+- **Email:** courses@knowbuia.com
+- **LinkedIn:** https://www.linkedin.com/in/cesarponce-csp/
 ## 📄 Licencia
 
 Este material está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
@@ -125,4 +124,4 @@ Si este curso te resultó útil, ¡considera darle una estrella ⭐ al repositor
 
 ---
 
-**¡Feliz aprendizaje! 🎉** | Última actualización: Octubre 2025
+**¡Feliz aprendizaje! 🎉** | Última actualización: Noviembre 2025
