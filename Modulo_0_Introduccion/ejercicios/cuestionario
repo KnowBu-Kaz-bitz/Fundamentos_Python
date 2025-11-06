@@ -1,0 +1,606 @@
+import React, { useState, useEffect } from 'react';
+import { CheckCircle, XCircle, Code, BookOpen, Download, AlertCircle } from 'lucide-react';
+
+const PythonQuiz = () => {
+  const [currentSection, setCurrentSection] = useState('start');
+  const [studentName, setStudentName] = useState('');
+  const [studentLastName, setStudentLastName] = useState('');
+  const [quizDate, setQuizDate] = useState('');
+  const [answers, setAnswers] = useState({});
+  const [codeAnswers, setCodeAnswers] = useState({});
+  const [showResults, setShowResults] = useState(false);
+
+  useEffect(() => {
+    const today = new Date().toISOString().split('T')[0];
+    setQuizDate(today);
+  }, []);
+
+  const multipleChoiceQuestions = [
+    {
+      id: 'q1',
+      question: '¿Cuál es la sintaxis correcta para imprimir "Hola Mundo" en Python?',
+      options: [
+        'print(Hola Mundo)',
+        'print("Hola Mundo")',
+        'console.log("Hola Mundo")',
+        'echo "Hola Mundo"'
+      ],
+      correct: 1,
+      explanation: 'En Python, print() requiere comillas (simples o dobles) alrededor del texto que queremos mostrar.'
+    },
+    {
+      id: 'q2',
+      question: '¿Qué tipo de dato es el valor 42?',
+      options: [
+        'str (cadena)',
+        'float (decimal)',
+        'int (entero)',
+        'bool (booleano)'
+      ],
+      correct: 2,
+      explanation: '42 es un número entero (int) porque no tiene punto decimal.'
+    },
+    {
+      id: 'q3',
+      question: '¿Cuál de estos es un tipo de dato booleano en Python?',
+      options: [
+        '"True"',
+        'True',
+        'true',
+        '1'
+      ],
+      correct: 1,
+      explanation: 'En Python, los booleanos son True y False (con mayúscula inicial). Entre comillas sería una cadena.'
+    },
+    {
+      id: 'q4',
+      question: '¿Cómo se crea una f-string en Python?',
+      options: [
+        'print("Hola " + nombre)',
+        'print(f"Hola {nombre}")',
+        'print("Hola %s" % nombre)',
+        'print(`Hola ${nombre}`)'
+      ],
+      correct: 1,
+      explanation: 'Las f-strings se crean colocando una "f" antes de las comillas y usando {} para insertar variables.'
+    },
+    {
+      id: 'q5',
+      question: '¿Cuál es la forma correcta de crear una lista en Python?',
+      options: [
+        'lista = (1, 2, 3)',
+        'lista = {1, 2, 3}',
+        'lista = [1, 2, 3]',
+        'lista = <1, 2, 3>'
+      ],
+      correct: 2,
+      explanation: 'Las listas en Python se crean usando corchetes []. Los paréntesis son para tuplas y las llaves para sets o diccionarios.'
+    },
+    {
+      id: 'q6',
+      question: '¿Qué imprime este código? x = 3.14; print(type(x))',
+      options: [
+        '<class \'int\'>',
+        '<class \'float\'>',
+        '<class \'str\'>',
+        '<class \'decimal\'>'
+      ],
+      correct: 1,
+      explanation: '3.14 tiene punto decimal, por lo tanto es un float. type() devuelve el tipo de dato.'
+    },
+    {
+      id: 'q7',
+      question: '¿Cómo accedes al primer elemento de una lista llamada "frutas"?',
+      options: [
+        'frutas[1]',
+        'frutas.first()',
+        'frutas[0]',
+        'frutas.get(0)'
+      ],
+      correct: 2,
+      explanation: 'En Python, los índices comienzan en 0, así que frutas[0] accede al primer elemento.'
+    },
+    {
+      id: 'q8',
+      question: '¿Cuál es el resultado de: nombre = "Ana"; print(f"Hola {nombre}!")?',
+      options: [
+        'Hola {nombre}!',
+        'Hola Ana!',
+        'Hola nombre!',
+        'Error de sintaxis'
+      ],
+      correct: 1,
+      explanation: 'La f-string reemplaza {nombre} con el valor de la variable, resultando en "Hola Ana!"'
+    }
+  ];
+
+  const codingQuestions = [
+    {
+      id: 'c1',
+      question: 'Escribe código que imprima tu nombre completo usando print()',
+      placeholder: '# Escribe tu código aquí\nprint(...)',
+      hint: 'Usa print() con comillas alrededor de tu nombre',
+      validation: (code) => {
+        return code.includes('print(') && (code.includes('"') || code.includes("'"));
+      }
+    },
+    {
+      id: 'c2',
+      question: 'Crea una variable llamada "edad" con tu edad (número) e imprímela',
+      placeholder: '# Crea la variable y luego imprímela\nedad = ...\nprint(...)',
+      hint: 'Recuerda: edad = numero_sin_comillas',
+      validation: (code) => {
+        return code.includes('edad') && code.includes('print');
+      }
+    },
+    {
+      id: 'c3',
+      question: 'Crea una variable "precio" con el valor 99.99 y otra "producto" con el texto "Laptop". Usa una f-string para imprimir: "El producto cuesta $99.99"',
+      placeholder: '# Crea las variables\nprecio = ...\nproducto = ...\n# Usa f-string\nprint(f"...")',
+      hint: 'Usa f"..." y {variable} para insertar valores',
+      validation: (code) => {
+        return code.includes('precio') && code.includes('producto') && 
+               code.includes('f"') && code.includes('{');
+      }
+    },
+    {
+      id: 'c4',
+      question: 'Crea una lista llamada "colores" con 3 colores diferentes e imprímela',
+      placeholder: '# Crea la lista con corchetes []\ncolores = [...]\nprint(...)',
+      hint: 'Las listas usan corchetes: ["color1", "color2", "color3"]',
+      validation: (code) => {
+        return code.includes('colores') && code.includes('[') && code.includes(']');
+      }
+    },
+    {
+      id: 'c5',
+      question: 'Crea una lista "numeros" con [10, 20, 30] e imprime solo el primer elemento',
+      placeholder: '# Crea la lista\nnumeros = ...\n# Imprime el primer elemento usando índice\nprint(...)',
+      hint: 'El primer elemento está en el índice 0: lista[0]',
+      validation: (code) => {
+        return code.includes('numeros') && code.includes('[0]');
+      }
+    }
+  ];
+
+  const handleMultipleChoice = (questionId, answerIndex) => {
+    setAnswers({...answers, [questionId]: answerIndex});
+  };
+
+  const handleCodeAnswer = (questionId, code) => {
+    setCodeAnswers({...codeAnswers, [questionId]: code});
+  };
+
+  const calculateResults = () => {
+    let mcCorrect = 0;
+    let codeCorrect = 0;
+    
+    multipleChoiceQuestions.forEach(q => {
+      if (answers[q.id] === q.correct) mcCorrect++;
+    });
+    
+    codingQuestions.forEach(q => {
+      if (codeAnswers[q.id] && q.validation(codeAnswers[q.id])) {
+        codeCorrect++;
+      }
+    });
+    
+    return {
+      mcCorrect,
+      mcTotal: multipleChoiceQuestions.length,
+      codeCorrect,
+      codeTotal: codingQuestions.length,
+      total: mcCorrect + codeCorrect,
+      max: multipleChoiceQuestions.length + codingQuestions.length
+    };
+  };
+
+  const exportResults = () => {
+    const results = calculateResults();
+    const exportData = {
+      estudiante: {
+        nombre: studentName,
+        apellido: studentLastName,
+        fecha: quizDate
+      },
+      resultados: {
+        opcionMultiple: {
+          correctas: results.mcCorrect,
+          total: results.mcTotal,
+          porcentaje: Math.round((results.mcCorrect / results.mcTotal) * 100)
+        },
+        codigo: {
+          correctas: results.codeCorrect,
+          total: results.codeTotal,
+          porcentaje: Math.round((results.codeCorrect / results.codeTotal) * 100)
+        },
+        general: {
+          correctas: results.total,
+          total: results.max,
+          porcentaje: Math.round((results.total / results.max) * 100)
+        }
+      },
+      respuestasOpcionMultiple: multipleChoiceQuestions.map(q => ({
+        pregunta: q.question,
+        respuestaEstudiante: q.options[answers[q.id]] || 'Sin respuesta',
+        respuestaCorrecta: q.options[q.correct],
+        correcta: answers[q.id] === q.correct
+      })),
+      respuestasCodigo: codingQuestions.map(q => ({
+        pregunta: q.question,
+        codigo: codeAnswers[q.id] || 'Sin respuesta',
+        correcta: codeAnswers[q.id] && q.validation(codeAnswers[q.id])
+      }))
+    };
+
+    const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `cuestionario_${studentLastName}_${studentName}_${quizDate}.json`;
+    a.click();
+  };
+
+  const StartScreen = () => (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-4">
+      <div className="max-w-2xl w-full bg-slate-800/50 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-cyan-500/30">
+        <div className="text-center mb-8">
+          <div className="inline-block p-3 bg-cyan-500/20 rounded-2xl mb-4">
+            <Code className="w-12 h-12 text-cyan-400" />
+          </div>
+          <h1 className="text-4xl font-bold text-white mb-2">
+            Domina el análisis de datos
+          </h1>
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-4">
+            con Python
+          </h2>
+          <p className="text-slate-300 text-lg mb-2">
+            Cuestionario de Fundamentos Python
+          </p>
+          <p className="text-slate-400">
+            Evalúa tus conocimientos sobre print(), tipos de datos, f-strings y listas
+          </p>
+        </div>
+
+        <div className="space-y-4 mb-6">
+          <div>
+            <label className="block text-cyan-400 mb-2 font-medium">Nombre(s)</label>
+            <input
+              type="text"
+              value={studentName}
+              onChange={(e) => setStudentName(e.target.value)}
+              className="w-full bg-slate-700/50 border border-slate-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition"
+              placeholder="Ingresa tu nombre"
+            />
+          </div>
+          <div>
+            <label className="block text-cyan-400 mb-2 font-medium">Apellido(s)</label>
+            <input
+              type="text"
+              value={studentLastName}
+              onChange={(e) => setStudentLastName(e.target.value)}
+              className="w-full bg-slate-700/50 border border-slate-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition"
+              placeholder="Ingresa tu apellido"
+            />
+          </div>
+          <div>
+            <label className="block text-cyan-400 mb-2 font-medium">Fecha</label>
+            <input
+              type="date"
+              value={quizDate}
+              onChange={(e) => setQuizDate(e.target.value)}
+              className="w-full bg-slate-700/50 border border-slate-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition"
+            />
+          </div>
+        </div>
+
+        <button
+          onClick={() => studentName && studentLastName && setCurrentSection('multiple-choice')}
+          disabled={!studentName || !studentLastName}
+          className="w-full bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-semibold py-4 rounded-xl hover:shadow-lg hover:shadow-cyan-500/50 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Comenzar Cuestionario
+        </button>
+
+        <div className="mt-6 flex items-center justify-center gap-2 text-cyan-400 bg-cyan-500/10 rounded-xl p-3">
+          <AlertCircle className="w-5 h-5" />
+          <span className="text-sm">Tiempo estimado: 15-20 minutos</span>
+        </div>
+      </div>
+    </div>
+  );
+
+  const MultipleChoiceSection = () => (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4 py-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-slate-800/50 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-cyan-500/30 mb-6">
+          <div className="flex items-center gap-3 mb-6">
+            <BookOpen className="w-8 h-8 text-cyan-400" />
+            <h2 className="text-3xl font-bold text-white">Sección 1: Opción Múltiple</h2>
+          </div>
+          <p className="text-slate-300 mb-4">
+            Selecciona la respuesta correcta para cada pregunta
+          </p>
+          <div className="bg-slate-700/30 rounded-xl p-3">
+            <div className="flex justify-between text-sm">
+              <span className="text-slate-400">Progreso</span>
+              <span className="text-cyan-400 font-semibold">
+                {Object.keys(answers).length} / {multipleChoiceQuestions.length}
+              </span>
+            </div>
+            <div className="mt-2 h-2 bg-slate-700 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-cyan-500 to-purple-500 transition-all duration-300"
+                style={{width: `${(Object.keys(answers).length / multipleChoiceQuestions.length) * 100}%`}}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          {multipleChoiceQuestions.map((q, idx) => (
+            <div key={q.id} className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-slate-700/50">
+              <h3 className="text-xl font-semibold text-white mb-4">
+                <span className="text-cyan-400 mr-2">{idx + 1}.</span>
+                {q.question}
+              </h3>
+              <div className="space-y-3">
+                {q.options.map((option, optIdx) => (
+                  <label
+                    key={optIdx}
+                    className={`block p-4 rounded-xl border-2 cursor-pointer transition ${
+                      answers[q.id] === optIdx
+                        ? 'border-cyan-500 bg-cyan-500/10'
+                        : 'border-slate-600 bg-slate-700/30 hover:border-slate-500'
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      name={q.id}
+                      checked={answers[q.id] === optIdx}
+                      onChange={() => handleMultipleChoice(q.id, optIdx)}
+                      className="mr-3"
+                    />
+                    <span className="text-white">{option}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <button
+          onClick={() => setCurrentSection('coding')}
+          disabled={Object.keys(answers).length < multipleChoiceQuestions.length}
+          className="mt-8 w-full bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-semibold py-4 rounded-xl hover:shadow-lg hover:shadow-cyan-500/50 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Continuar a Sección de Código
+        </button>
+      </div>
+    </div>
+  );
+
+  const CodingSection = () => (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4 py-8">
+      <div className="max-w-4xl mx-auto">
+        <div className="bg-slate-800/50 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-cyan-500/30 mb-6">
+          <div className="flex items-center gap-3 mb-6">
+            <Code className="w-8 h-8 text-purple-400" />
+            <h2 className="text-3xl font-bold text-white">Sección 2: Práctica de Código</h2>
+          </div>
+          <p className="text-slate-300 mb-4">
+            Escribe código Python que resuelva cada ejercicio
+          </p>
+          <div className="bg-slate-700/30 rounded-xl p-3">
+            <div className="flex justify-between text-sm">
+              <span className="text-slate-400">Progreso</span>
+              <span className="text-purple-400 font-semibold">
+                {Object.keys(codeAnswers).filter(k => codeAnswers[k]).length} / {codingQuestions.length}
+              </span>
+            </div>
+            <div className="mt-2 h-2 bg-slate-700 rounded-full overflow-hidden">
+              <div 
+                className="h-full bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-300"
+                style={{width: `${(Object.keys(codeAnswers).filter(k => codeAnswers[k]).length / codingQuestions.length) * 100}%`}}
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          {codingQuestions.map((q, idx) => (
+            <div key={q.id} className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-slate-700/50">
+              <h3 className="text-xl font-semibold text-white mb-4">
+                <span className="text-purple-400 mr-2">Ejercicio {idx + 1}:</span>
+                {q.question}
+              </h3>
+              <textarea
+                value={codeAnswers[q.id] || ''}
+                onChange={(e) => handleCodeAnswer(q.id, e.target.value)}
+                placeholder={q.placeholder}
+                className="w-full bg-slate-900/50 border border-slate-600 rounded-xl px-4 py-3 text-green-400 font-mono text-sm focus:outline-none focus:border-purple-500 transition min-h-32"
+              />
+              <div className="mt-3 flex items-start gap-2 bg-purple-500/10 rounded-lg p-3 border border-purple-500/30">
+                <AlertCircle className="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" />
+                <p className="text-purple-300 text-sm">
+                  <strong>Pista:</strong> {q.hint}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <button
+          onClick={() => {
+            setShowResults(true);
+            setCurrentSection('results');
+          }}
+          disabled={Object.keys(codeAnswers).filter(k => codeAnswers[k]).length < codingQuestions.length}
+          className="mt-8 w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-4 rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Ver Resultados
+        </button>
+      </div>
+    </div>
+  );
+
+  const ResultsSection = () => {
+    const results = calculateResults();
+    const percentage = Math.round((results.total / results.max) * 100);
+
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4 py-8">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-slate-800/50 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-cyan-500/30 mb-6">
+            <h2 className="text-3xl font-bold text-white mb-2">Resultados del Cuestionario</h2>
+            <p className="text-slate-300 mb-6">
+              {studentName} {studentLastName} - {quizDate}
+            </p>
+
+            <div className="grid md:grid-cols-3 gap-4 mb-8">
+              <div className="bg-gradient-to-br from-cyan-500/20 to-cyan-600/20 rounded-2xl p-6 border border-cyan-500/30">
+                <h3 className="text-cyan-400 text-sm font-semibold mb-2">OPCIÓN MÚLTIPLE</h3>
+                <p className="text-4xl font-bold text-white mb-1">{results.mcCorrect}/{results.mcTotal}</p>
+                <p className="text-cyan-300 text-sm">{Math.round((results.mcCorrect/results.mcTotal)*100)}% correctas</p>
+              </div>
+              <div className="bg-gradient-to-br from-purple-500/20 to-purple-600/20 rounded-2xl p-6 border border-purple-500/30">
+                <h3 className="text-purple-400 text-sm font-semibold mb-2">CÓDIGO</h3>
+                <p className="text-4xl font-bold text-white mb-1">{results.codeCorrect}/{results.codeTotal}</p>
+                <p className="text-purple-300 text-sm">{Math.round((results.codeCorrect/results.codeTotal)*100)}% correctas</p>
+              </div>
+              <div className="bg-gradient-to-br from-pink-500/20 to-pink-600/20 rounded-2xl p-6 border border-pink-500/30">
+                <h3 className="text-pink-400 text-sm font-semibold mb-2">CALIFICACIÓN TOTAL</h3>
+                <p className="text-4xl font-bold text-white mb-1">{percentage}%</p>
+                <p className="text-pink-300 text-sm">{results.total} de {results.max}</p>
+              </div>
+            </div>
+
+            <button
+              onClick={exportResults}
+              className="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold py-4 rounded-xl hover:shadow-lg hover:shadow-green-500/50 transition flex items-center justify-center gap-2"
+            >
+              <Download className="w-5 h-5" />
+              Descargar Resultados para el Instructor
+            </button>
+          </div>
+
+          <div className="space-y-4">
+            <h3 className="text-2xl font-bold text-white mb-4">Revisión Detallada</h3>
+            
+            <div className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-slate-700/50">
+              <h4 className="text-xl font-semibold text-cyan-400 mb-4">Opción Múltiple</h4>
+              {multipleChoiceQuestions.map((q, idx) => {
+                const isCorrect = answers[q.id] === q.correct;
+                return (
+                  <div key={q.id} className="mb-6 last:mb-0">
+                    <div className="flex items-start gap-3 mb-2">
+                      {isCorrect ? (
+                        <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0 mt-1" />
+                      ) : (
+                        <XCircle className="w-6 h-6 text-red-400 flex-shrink-0 mt-1" />
+                      )}
+                      <div className="flex-1">
+                        <p className="text-white font-medium mb-2">{idx + 1}. {q.question}</p>
+                        <p className={`text-sm mb-1 ${isCorrect ? 'text-green-400' : 'text-red-400'}`}>
+                          Tu respuesta: {q.options[answers[q.id]]}
+                        </p>
+                        {!isCorrect && (
+                          <p className="text-sm text-green-400 mb-2">
+                            Respuesta correcta: {q.options[q.correct]}
+                          </p>
+                        )}
+                        <p className="text-slate-300 text-sm bg-slate-700/30 rounded-lg p-3 mt-2">
+                          📚 {q.explanation}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            <div className="bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 shadow-xl border border-slate-700/50">
+              <h4 className="text-xl font-semibold text-purple-400 mb-4">Ejercicios de Código</h4>
+              {codingQuestions.map((q, idx) => {
+                const isCorrect = codeAnswers[q.id] && q.validation(codeAnswers[q.id]);
+                return (
+                  <div key={q.id} className="mb-6 last:mb-0">
+                    <div className="flex items-start gap-3 mb-2">
+                      {isCorrect ? (
+                        <CheckCircle className="w-6 h-6 text-green-400 flex-shrink-0 mt-1" />
+                      ) : (
+                        <XCircle className="w-6 h-6 text-red-400 flex-shrink-0 mt-1" />
+                      )}
+                      <div className="flex-1">
+                        <p className="text-white font-medium mb-2">Ejercicio {idx + 1}: {q.question}</p>
+                        <p className={`text-sm mb-2 ${isCorrect ? 'text-green-400' : 'text-red-400'}`}>
+                          {isCorrect ? '✓ Código validado correctamente' : '✗ El código no cumple con los requisitos'}
+                        </p>
+                        <div className="bg-slate-900/50 rounded-lg p-3 mt-2">
+                          <p className="text-slate-400 text-xs mb-1">Tu código:</p>
+                          <pre className="text-green-400 text-sm font-mono whitespace-pre-wrap">
+                            {codeAnswers[q.id] || 'Sin respuesta'}
+                          </pre>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {percentage < 70 && (
+            <div className="mt-6 bg-yellow-500/10 border border-yellow-500/30 rounded-2xl p-6">
+              <h4 className="text-yellow-400 font-semibold mb-2 flex items-center gap-2">
+                <AlertCircle className="w-5 h-5" />
+                Áreas de Mejora
+              </h4>
+              <p className="text-yellow-200 text-sm">
+                Se recomienda repasar los temas donde tuviste errores antes de continuar con los siguientes módulos. 
+                Practica los ejercicios de código y revisa las explicaciones de las preguntas de opción múltiple.
+              </p>
+            </div>
+          )}
+
+          <div className="mt-6 bg-slate-800/50 backdrop-blur-xl rounded-2xl p-6 border border-slate-700/50">
+            <h4 className="text-white font-semibold mb-3">📋 Instrucciones para el Instructor</h4>
+            <ol className="text-slate-300 text-sm space-y-2 list-decimal list-inside">
+              <li>El estudiante debe descargar el archivo JSON con sus resultados</li>
+              <li>El archivo contiene todas las respuestas, código escrito y estadísticas</li>
+              <li>Puede subirse a Google Classroom, Moodle, o enviarse por correo electrónico</li>
+              <li>El nombre del archivo incluye el nombre del estudiante y la fecha</li>
+            </ol>
+          </div>
+
+          <button
+            onClick={() => {
+              setCurrentSection('start');
+              setAnswers({});
+              setCodeAnswers({});
+              setShowResults(false);
+              setStudentName('');
+              setStudentLastName('');
+              const today = new Date().toISOString().split('T')[0];
+              setQuizDate(today);
+            }}
+            className="mt-6 w-full bg-slate-700 text-white font-semibold py-4 rounded-xl hover:bg-slate-600 transition"
+          >
+            Realizar Nuevo Cuestionario
+          </button>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div>
+      {currentSection === 'start' && <StartScreen />}
+      {currentSection === 'multiple-choice' && <MultipleChoiceSection />}
+      {currentSection === 'coding' && <CodingSection />}
+      {currentSection === 'results' && <ResultsSection />}
+    </div>
+  );
+};
+
+export default PythonQuiz;
