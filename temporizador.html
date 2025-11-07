@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temporizador Coding - Lofi Session</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%);
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        .glass {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+        .timer-display {
+            font-family: 'Courier New', monospace;
+            text-shadow: 0 0 20px rgba(6, 182, 212, 0.5);
+        }
+        .pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: .5;
+            }
+        }
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+        .circle {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.3;
+            animation: moveCircle 20s infinite alternate;
+        }
+        @keyframes moveCircle {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(100px, 100px);
+            }
+        }
+        .btn-time {
+            transition: all 0.3s ease;
+        }
+        .btn-time:hover {
+            transform: scale(1.05);
+        }
+        .btn-time.active {
+            background: linear-gradient(135deg, #06b6d4 0%, #a855f7 100%);
+            border-color: #06b6d4;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #06b6d4 0%, #a855f7 100%);
+            cursor: pointer;
+        }
+        input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #06b6d4 0%, #a855f7 100%);
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center p-4">
+    
+    <!-- Círculos de fondo animados -->
+    <div class="circle" style="width: 400px; height: 400px; background: #06b6d4; top: 10%; left: 10%;"></div>
+    <div class="circle" style="width: 300px; height: 300px; background: #a855f7; bottom: 10%; right: 10%; animation-delay: 5s;"></div>
+    <div class="circle" style="width: 200px; height: 200px; background: #ec4899; top: 50%; left: 50%; animation-delay: 10s;"></div>
+
+    <!-- Contenedor principal -->
+    <div class="relative z-10 max-w-4xl w-full">
+        <!-- Pantalla de configuración -->
+        <div id="setupScreen" class="glass rounded-3xl p-8 shadow-2xl">
+            <div class="text-center mb-8 float">
+                <div class="inline-block p-4 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-3xl mb-4">
+                    <svg class="w-16 h-16 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+                <h1 class="text-5xl font-bold text-white mb-3">
+                    Coding Session
+                </h1>
+                <h2 class="text-2xl bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-3">
+                    Temporizador Lofi
+                </h2>
+                <p class="text-slate-300">
+                    Selecciona tu tiempo de enfoque y comienza a programar 🎧
+                </p>
+            </div>
+
+            <!-- Selección rápida de tiempo -->
+            <div class="mb-8">
+                <h3 class="text-cyan-400 font-semibold mb-4 text-center">Tiempos Preestablecidos</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <button onclick="setQuickTime(5)" class="btn-time glass rounded-2xl p-6 border-2 border-slate-600 hover:border-cyan-500 text-center">
+                        <p class="text-4xl font-bold text-white mb-1">5</p>
+                        <p class="text-cyan-400 text-sm">minutos</p>
+                    </button>
+                    <button onclick="setQuickTime(15)" class="btn-time glass rounded-2xl p-6 border-2 border-slate-600 hover:border-cyan-500 text-center">
+                        <p class="text-4xl font-bold text-white mb-1">15</p>
+                        <p class="text-purple-400 text-sm">minutos</p>
+                    </button>
+                    <button onclick="setQuickTime(25)" class="btn-time glass rounded-2xl p-6 border-2 border-slate-600 hover:border-cyan-500 text-center">
+                        <p class="text-4xl font-bold text-white mb-1">25</p>
+                        <p class="text-pink-400 text-sm">minutos</p>
+                        <p class="text-xs text-slate-400 mt-1">Pomodoro</p>
+                    </button>
+                    <button onclick="setQuickTime(45)" class="btn-time glass rounded-2xl p-6 border-2 border-slate-600 hover:border-cyan-500 text-center">
+                        <p class="text-4xl font-bold text-white mb-1">45</p>
+                        <p class="text-cyan-400 text-sm">minutos</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Selector personalizado -->
+            <div class="mb-8">
+                <h3 class="text-cyan-400 font-semibold mb-4 text-center">Tiempo Personalizado</h3>
+                <div class="glass rounded-2xl p-6 border border-slate-600">
+                    <div class="flex items-center justify-center gap-4 mb-4">
+                        <span class="text-white text-lg">Minutos:</span>
+                        <span class="text-6xl font-bold text-transparent bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text" id="customTimeDisplay">10</span>
+                    </div>
+                    <input type="range" id="customTimeSlider" min="1" max="120" value="10" 
+                        class="w-full h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer"
+                        oninput="updateCustomTime(this.value)">
+                    <div class="flex justify-between text-xs text-slate-400 mt-2">
+                        <span>1 min</span>
+                        <span>120 min</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Control de música -->
+            <div class="mb-8">
+                <h3 class="text-cyan-400 font-semibold mb-4 text-center">Música de Fondo</h3>
+                <div class="glass rounded-2xl p-6 border border-slate-600">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center gap-3">
+                            <svg class="w-6 h-6 text-purple-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                            </svg>
+                            <span class="text-white font-medium">Lofi Beats</span>
+                        </div>
+                        <label class="relative inline-flex items-center cursor-pointer">
+                            <input type="checkbox" id="musicToggle" class="sr-only peer" checked onchange="toggleMusic()">
+                            <div class="w-11 h-6 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-gradient-to-r peer-checked:from-cyan-500 peer-checked:to-purple-500"></div>
+                        </label>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-slate-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+                        </svg>
+                        <input type="range" id="volumeSlider" min="0" max="100" value="50" 
+                            class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer"
+                            oninput="updateVolume(this.value)">
+                        <svg class="w-5 h-5 text-slate-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botón de inicio -->
+            <button onclick="startTimer()" class="w-full bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-bold py-6 rounded-2xl hover:shadow-lg hover:shadow-cyan-500/50 transition text-xl">
+                🚀 Comenzar Sesión
+            </button>
+
+            <!-- Audio element -->
+            <audio id="bgMusic" loop>
+                <source src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js" type="audio/mpeg">
+            </audio>
+        </div>
+
+        <!-- Pantalla del temporizador -->
+        <div id="timerScreen" class="hidden glass rounded-3xl p-8 shadow-2xl">
+            <div class="text-center">
+                <!-- Indicador de música -->
+                <div class="flex justify-center mb-6">
+                    <div id="musicIndicator" class="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full border border-cyan-500/30">
+                        <svg class="w-5 h-5 text-cyan-400 pulse" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/>
+                        </svg>
+                        <span class="text-cyan-400 text-sm font-medium">Lofi Playing...</span>
+                    </div>
+                </div>
+
+                <!-- Título de sesión -->
+                <h2 class="text-2xl text-slate-300 mb-3">Comenzamos en breve</h2>
+                
+                <!-- Contador principal -->
+                <div class="timer-display text-9xl font-bold text-transparent bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text mb-8" id="timeDisplay">
+                    25:00
+                </div>
+
+                <!-- Barra de progreso -->
+                <div class="mb-8">
+                    <div class="h-3 bg-slate-700 rounded-full overflow-hidden">
+                        <div id="progressBar" class="h-full bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-500 transition-all duration-1000" style="width: 100%"></div>
+                    </div>
+                </div>
+
+                <!-- Mensaje motivacional -->
+                <p class="text-slate-300 text-lg mb-8 italic" id="motivationalText">
+                    "El código es poesía en movimiento"
+                </p>
+
+                <!-- Controles -->
+                <div class="flex gap-4 justify-center mb-6">
+                    <button onclick="pauseTimer()" id="pauseBtn" class="flex-1 max-w-xs bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-semibold py-4 rounded-xl hover:shadow-lg hover:shadow-yellow-500/50 transition">
+                        ⏸️ Pausar
+                    </button>
+                    <button onclick="resumeTimer()" id="resumeBtn" class="hidden flex-1 max-w-xs bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold py-4 rounded-xl hover:shadow-lg hover:shadow-green-500/50 transition">
+                        ▶️ Reanudar
+                    </button>
+                    <button onclick="resetTimer()" class="flex-1 max-w-xs bg-gradient-to-r from-red-500 to-rose-500 text-white font-semibold py-4 rounded-xl hover:shadow-lg hover:shadow-red-500/50 transition">
+                        🔄 Reiniciar
+                    </button>
+                </div>
+
+                <!-- Control de volumen en pantalla de timer -->
+                <div class="glass rounded-xl p-4 border border-slate-600 max-w-md mx-auto">
+                    <div class="flex items-center gap-3">
+                        <svg class="w-5 h-5 text-slate-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/>
+                        </svg>
+                        <input type="range" id="volumeSlider2" min="0" max="100" value="50" 
+                            class="flex-1 h-2 bg-slate-700 rounded-lg appearance-none cursor-pointer"
+                            oninput="updateVolume(this.value)">
+                        <span class="text-slate-400 text-sm w-12 text-right" id="volumeDisplay">50%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedMinutes = 10;
+        let totalSeconds = 0;
+        let remainingSeconds = 0;
+        let timerInterval = null;
+        let isPaused = false;
+        let audioContext = null;
+        let oscillator = null;
+        let gainNode = null;
+        let isPlaying = false;
+
+        const motivationalMessages = [
+            "El código es poesía en movimiento",
+            "Cada línea cuenta una historia",
+            "Debug tu mente, compila tus sueños",
+            "Programar es crear el futuro",
+            "Python: simple, poderoso, elegante",
+            "Los mejores programadores nunca dejan de aprender",
+            "Transforma ideas en realidad, línea por línea",
+            "El error es solo el camino hacia la solución"
+        ];
+
+        // Generar música lofi sintética usando Web Audio API
+        function createLofiMusic() {
+            if (!audioContext) {
+                audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            }
+
+            // Detener música anterior si existe
+            if (oscillator) {
+                oscillator.stop();
+            }
+
+            // Crear osciladores para diferentes notas
+            const notes = [261.63, 293.66, 329.63, 349.23, 392.00, 440.00, 493.88];
+            
+            // Ganancia principal
+            gainNode = audioContext.createGain();
+            gainNode.gain.value = 0.1;
+            gainNode.connect(audioContext.destination);
+
+            // Función para tocar una nota
+            function playNote(frequency, duration, delay) {
+                setTimeout(() => {
+                    const osc = audioContext.createOscillator();
+                    const noteGain = audioContext.createGain();
+                    
+                    osc.type = 'sine';
+                    osc.frequency.value = frequency;
+                    
+                    noteGain.gain.value = 0;
+                    noteGain.gain.linearRampToValueAtTime(0.05, audioContext.currentTime + 0.1);
+                    noteGain.gain.linearRampToValueAtTime(0, audioContext.currentTime + duration);
+                    
+                    osc.connect(noteGain);
+                    noteGain.connect(gainNode);
+                    
+                    osc.start(audioContext.currentTime);
+                    osc.stop(audioContext.currentTime + duration);
+                }, delay);
+            }
+
+            // Crear patrón lofi repetitivo
+            function lofiPattern() {
+                const pattern = [0, 2, 4, 2, 5, 4, 2, 0];
+                pattern.forEach((noteIndex, i) => {
+                    playNote(notes[noteIndex], 0.8, i * 600);
+                });
+            }
+
+            // Repetir el patrón
+            function loopPattern() {
+                if (isPlaying) {
+                    lofiPattern();
+                    setTimeout(loopPattern, 4800);
+                }
+            }
+
+            isPlaying = true;
+            loopPattern();
+        }
+
+        function stopLofiMusic() {
+            isPlaying = false;
+            if (oscillator) {
+                oscillator.stop();
+                oscillator = null;
+            }
+        }
+
+        function updateCustomTime(value) {
+            selectedMinutes = parseInt(value);
+            document.getElementById('customTimeDisplay').textContent = selectedMinutes;
+            
+            // Remover clase active de todos los botones
+            document.querySelectorAll('.btn-time').forEach(btn => {
+                btn.classList.remove('active');
+            });
+        }
+
+        function setQuickTime(minutes) {
+            selectedMinutes = minutes;
+            document.getElementById('customTimeSlider').value = minutes;
+            document.getElementById('customTimeDisplay').textContent = minutes;
+            
+            // Marcar botón como activo
+            document.querySelectorAll('.btn-time').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.closest('.btn-time').classList.add('active');
+        }
+
+        function toggleMusic() {
+            const toggle = document.getElementById('musicToggle');
+            if (toggle.checked) {
+                createLofiMusic();
+            } else {
+                stopLofiMusic();
+            }
+        }
+
+        function updateVolume(value) {
+            if (gainNode) {
+                gainNode.gain.value = value / 1000;
+            }
+            document.getElementById('volumeSlider').value = value;
+            document.getElementById('volumeSlider2').value = value;
+            document.getElementById('volumeDisplay').textContent = value + '%';
+        }
+
+        function startTimer() {
+            totalSeconds = selectedMinutes * 60;
+            remainingSeconds = totalSeconds;
+            
+            document.getElementById('setupScreen').classList.add('hidden');
+            document.getElementById('timerScreen').classList.remove('hidden');
+            
+            updateDisplay();
+            updateMotivationalText();
+            
+            // Iniciar música si está activada
+            if (document.getElementById('musicToggle').checked) {
+                createLofiMusic();
+                document.getElementById('musicIndicator').classList.remove('hidden');
+            } else {
+                document.getElementById('musicIndicator').classList.add('hidden');
+            }
+            
+            timerInterval = setInterval(updateTimer, 1000);
+        }
+
+        function updateTimer() {
+            if (!isPaused && remainingSeconds > 0) {
+                remainingSeconds--;
+                updateDisplay();
+                updateProgressBar();
+                
+                // Cambiar mensaje motivacional cada 2 minutos
+                if (remainingSeconds % 120 === 0) {
+                    updateMotivationalText();
+                }
+                
+                // Alerta cuando quedan 5 minutos
+                if (remainingSeconds === 300) {
+                    showNotification('⏰ ¡Quedan 5 minutos!');
+                }
+                
+                // Alerta cuando queda 1 minuto
+                if (remainingSeconds === 60) {
+                    showNotification('⏰ ¡Último minuto!');
+                }
+            } else if (remainingSeconds === 0) {
+                finishTimer();
+            }
+        }
+
+        function updateDisplay() {
+            const minutes = Math.floor(remainingSeconds / 60);
+            const seconds = remainingSeconds % 60;
+            const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('timeDisplay').textContent = display;
+        }
+
+        function updateProgressBar() {
+            const percentage = (remainingSeconds / totalSeconds) * 100;
+            document.getElementById('progressBar').style.width = percentage + '%';
+        }
+
+        function updateMotivationalText() {
+            const randomIndex = Math.floor(Math.random() * motivationalMessages.length);
+            document.getElementById('motivationalText').textContent = `"${motivationalMessages[randomIndex]}"`;
+        }
+
+        function showNotification(message) {
+            // Crear notificación visual
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-8 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-cyan-500 to-purple-500 text-white px-6 py-3 rounded-full shadow-lg z-50 animate-bounce';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function pauseTimer() {
+            isPaused = true;
+            document.getElementById('pauseBtn').classList.add('hidden');
+            document.getElementById('resumeBtn').classList.remove('hidden');
+        }
+
+        function resumeTimer() {
+            isPaused = false;
+            document.getElementById('pauseBtn').classList.remove('hidden');
+            document.getElementById('resumeBtn').classList.add('hidden');
+        }
+
+        function resetTimer() {
+            clearInterval(timerInterval);
+            stopLofiMusic();
+            isPaused = false;
+            
+            document.getElementById('timerScreen').classList.add('hidden');
+            document.getElementById('setupScreen').classList.remove('hidden');
+            document.getElementById('pauseBtn').classList.remove('hidden');
+            document.getElementById('resumeBtn').classList.add('hidden');
+        }
+
+        function finishTimer() {
+            clearInterval(timerInterval);
+            stopLofiMusic();
+            
+            document.getElementById('timeDisplay').textContent = '00:00';
+            document.getElementById('motivationalText').textContent = '🎉 ¡Sesión completada! ¡Excelente trabajo!';
+            
+            // Celebración visual
+            showNotification('🎉 ¡Tiempo completado! ¡Gran trabajo!');
+            
+            // Cambiar colores a verde
+            document.getElementById('progressBar').style.background = 'linear-gradient(90deg, #10b981, #34d399)';
+        }
+
+        // Inicializar música al cargar
+        window.addEventListener('DOMContentLoaded', () => {
+            createLofiMusic();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuestionario Python - Fundamentos</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #581c87 50%, #0f172a 100%);
+            min-height: 100vh;
+        }
+        .glass {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+        .progress-bar {
+            transition: width 0.3s ease;
+        }
+        textarea {
+            font-family: 'Courier New', monospace;
+        }
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body class="p-4">
+    
+    <!-- Header KnowBu -->
+    <div class="max-w-4xl mx-auto mb-4">
+        <div class="glass rounded-2xl p-4 shadow-xl">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="bg-gradient-to-r from-cyan-500 to-purple-500 p-2 rounded-lg">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                            KnowBu
+                        </h1>
+                        <p class="text-xs text-slate-400">Educación en IA y Tecnología</p>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <p class="text-xs text-slate-400">© 2025 KnowBu</p>
+                    <p class="text-xs text-slate-500">Todos los derechos reservados</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Pantalla de Inicio -->
+    <div id="startScreen" class="max-w-2xl mx-auto mt-10">
+        <div class="glass rounded-3xl p-8 shadow-2xl">
+            <div class="text-center mb-8">
+                <div class="inline-block p-3 bg-cyan-500/20 rounded-2xl mb-4">
+                    <svg class="w-12 h-12 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                    </svg>
+                </div>
+                <h1 class="text-4xl font-bold text-white mb-2">
+                    Domina el análisis de datos
+                </h1>
+                <h2 class="text-3xl font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent mb-4">
+                    con Python
+                </h2>
+                <p class="text-slate-300 text-lg mb-2">
+                    Cuestionario de Fundamentos Python
+                </p>
+                <p class="text-slate-400">
+                    Evalúa tus conocimientos sobre print(), tipos de datos, f-strings y listas
+                </p>
+            </div>
+
+            <div class="space-y-4 mb-6">
+                <div>
+                    <label class="block text-cyan-400 mb-2 font-medium">Nombre(s)</label>
+                    <input type="text" id="studentName" class="w-full bg-slate-700/50 border border-slate-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition" placeholder="Ingresa tu nombre">
+                </div>
+                <div>
+                    <label class="block text-cyan-400 mb-2 font-medium">Apellido(s)</label>
+                    <input type="text" id="studentLastName" class="w-full bg-slate-700/50 border border-slate-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition" placeholder="Ingresa tu apellido">
+                </div>
+                <div>
+                    <label class="block text-cyan-400 mb-2 font-medium">Fecha</label>
+                    <input type="date" id="quizDate" class="w-full bg-slate-700/50 border border-slate-600 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-cyan-500 transition">
+                </div>
+            </div>
+
+            <button onclick="startQuiz()" class="w-full bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-semibold py-4 rounded-xl hover:shadow-lg hover:shadow-cyan-500/50 transition">
+                Comenzar Cuestionario
+            </button>
+
+            <div class="mt-6 flex items-center justify-center gap-2 text-cyan-400 bg-cyan-500/10 rounded-xl p-3">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <span class="text-sm">Tiempo estimado: 15-20 minutos</span>
+            </div>
+
+            <div class="mt-6 text-center">
+                <p class="text-slate-400 text-xs">
+                    Para aclaraciones: <a href="mailto:courses@knowbuia.com" class="text-cyan-400 hover:text-cyan-300 underline">courses@knowbuia.com</a>
+                </p>
+                <p class="text-slate-500 text-xs mt-1">© 2025 KnowBu. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección Opción Múltiple -->
+    <div id="multipleChoiceSection" class="hidden max-w-4xl mx-auto py-8">
+        <div class="glass rounded-3xl p-8 shadow-2xl mb-6">
+            <div class="flex items-center gap-3 mb-6">
+                <svg class="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
+                <h2 class="text-3xl font-bold text-white">Sección 1: Opción Múltiple</h2>
+            </div>
+            <p class="text-slate-300 mb-4">Selecciona la respuesta correcta para cada pregunta</p>
+            <div class="bg-slate-700/30 rounded-xl p-3">
+                <div class="flex justify-between text-sm">
+                    <span class="text-slate-400">Progreso</span>
+                    <span class="text-cyan-400 font-semibold"><span id="mcProgress">0</span> / 13</span>
+                </div>
+                <div class="mt-2 h-2 bg-slate-700 rounded-full overflow-hidden">
+                    <div id="mcProgressBar" class="h-full bg-gradient-to-r from-cyan-500 to-purple-500 progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="mcQuestions" class="space-y-6"></div>
+
+        <button onclick="goToCoding()" id="continueToCoding" class="mt-8 w-full bg-gradient-to-r from-cyan-500 to-purple-500 text-white font-semibold py-4 rounded-xl hover:shadow-lg hover:shadow-cyan-500/50 transition opacity-50 cursor-not-allowed">
+            Continuar a Sección de Código
+        </button>
+    </div>
+
+    <!-- Sección de Código -->
+    <div id="codingSection" class="hidden max-w-4xl mx-auto py-8">
+        <div class="glass rounded-3xl p-8 shadow-2xl mb-6">
+            <div class="flex items-center gap-3 mb-6">
+                <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                </svg>
+                <h2 class="text-3xl font-bold text-white">Sección 2: Práctica de Código</h2>
+            </div>
+            <p class="text-slate-300 mb-4">Escribe código Python que resuelva cada ejercicio (El último es opcional)</p>
+            <div class="bg-slate-700/30 rounded-xl p-3">
+                <div class="flex justify-between text-sm">
+                    <span class="text-slate-400">Progreso</span>
+                    <span class="text-purple-400 font-semibold"><span id="codeProgress">0</span> / 5 (requeridos)</span>
+                </div>
+                <div class="mt-2 h-2 bg-slate-700 rounded-full overflow-hidden">
+                    <div id="codeProgressBar" class="h-full bg-gradient-to-r from-purple-500 to-pink-500 progress-bar" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="codeQuestions" class="space-y-6"></div>
+
+        <button onclick="showResults()" id="showResultsBtn" class="mt-8 w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold py-4 rounded-xl hover:shadow-lg hover:shadow-purple-500/50 transition opacity-50 cursor-not-allowed">
+            Ver Resultados
+        </button>
+    </div>
+
+    <!-- Sección de Resultados -->
+    <div id="resultsSection" class="hidden max-w-4xl mx-auto py-8">
+        <div class="glass rounded-3xl p-8 shadow-2xl mb-6">
+            <h2 class="text-3xl font-bold text-white mb-2">Resultados del Cuestionario</h2>
+            <p class="text-slate-300 mb-6" id="studentInfo"></p>
+
+            <div class="grid md:grid-cols-3 gap-4 mb-8">
+                <div class="bg-gradient-to-br from-cyan-500/20 to-cyan-600/20 rounded-2xl p-6 border border-cyan-500/30">
+                    <h3 class="text-cyan-400 text-sm font-semibold mb-2">OPCIÓN MÚLTIPLE</h3>
+                    <p class="text-4xl font-bold text-white mb-1"><span id="mcScore">0</span>/13</p>
+                    <p class="text-cyan-300 text-sm"><span id="mcPercent">0</span>% correctas</p>
+                </div>
+                <div class="bg-gradient-to-br from-purple-500/20 to-purple-600/20 rounded-2xl p-6 border border-purple-500/30">
+                    <h3 class="text-purple-400 text-sm font-semibold mb-2">CÓDIGO</h3>
+                    <p class="text-4xl font-bold text-white mb-1"><span id="codeScore">0</span>/5 <span class="text-sm text-purple-300">(+<span id="bonusScore">0</span> bonus)</span></p>
+                    <p class="text-purple-300 text-sm"><span id="codePercent">0</span>% correctas</p>
+                </div>
+                <div class="bg-gradient-to-br from-pink-500/20 to-pink-600/20 rounded-2xl p-6 border border-pink-500/30">
+                    <h3 class="text-pink-400 text-sm font-semibold mb-2">CALIFICACIÓN TOTAL</h3>
+                    <p class="text-4xl font-bold text-white mb-1"><span id="totalPercent">0</span>%</p>
+                    <p class="text-pink-300 text-sm"><span id="totalScore">0</span> de 18</p>
+                </div>
+            </div>
+
+            <button onclick="exportResults()" class="w-full bg-gradient-to-r from-green-500 to-emerald-500 text-white font-semibold py-4 rounded-xl hover:shadow-lg hover:shadow-green-500/50 transition flex items-center justify-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                </svg>
+                Descargar Resultados para el Instructor
+            </button>
+        </div>
+
+        <div class="space-y-4">
+            <h3 class="text-2xl font-bold text-white mb-4">Revisión Detallada</h3>
+            
+            <div class="glass rounded-2xl p-6 shadow-xl">
+                <h4 class="text-xl font-semibold text-cyan-400 mb-4">Opción Múltiple</h4>
+                <div id="mcReview"></div>
+            </div>
+
+            <div class="glass rounded-2xl p-6 shadow-xl">
+                <h4 class="text-xl font-semibold text-purple-400 mb-4">Ejercicios de Código</h4>
+                <div id="codeReview"></div>
+            </div>
+        </div>
+
+        <div id="improvementAlert" class="hidden mt-6 bg-yellow-500/10 border border-yellow-500/30 rounded-2xl p-6">
+            <h4 class="text-yellow-400 font-semibold mb-2 flex items-center gap-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                Áreas de Mejora
+            </h4>
+            <p class="text-yellow-200 text-sm">
+                Se recomienda repasar los temas donde tuviste errores antes de continuar con los siguientes módulos. 
+                Practica los ejercicios de código y revisa las explicaciones de las preguntas de opción múltiple.
+            </p>
+        </div>
+
+        <div class="mt-6 glass rounded-2xl p-6 border-2 border-cyan-500/30">
+            <h4 class="text-white font-semibold mb-3 flex items-center gap-2">
+                <svg class="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                </svg>
+                � Instrucciones de Envío
+            </h4>
+            <div class="bg-cyan-500/10 rounded-xl p-4 mb-4">
+                <p class="text-cyan-300 text-sm font-semibold mb-2">
+                    ⚠️ IMPORTANTE: Debes enviar el archivo JSON descargado a tu instructor
+                </p>
+                <ol class="text-slate-300 text-sm space-y-2 list-decimal list-inside">
+                    <li>Haz clic en el botón "Descargar Resultados para el Instructor"</li>
+                    <li>Envía el archivo descargado por correo electrónico a: 
+                        <a href="mailto:courses@knowbuia.com" class="text-cyan-400 font-semibold hover:text-cyan-300 underline">courses@knowbuia.com</a>
+                    </li>
+                    <li>Usa el siguiente asunto: <span class="text-white font-mono bg-slate-700 px-2 py-1 rounded">Cuestionario - Fundamentos Python - [Tu Nombre]</span></li>
+                    <li>Adjunta el archivo JSON que descargaste</li>
+                </ol>
+            </div>
+            <div class="flex items-start gap-2 bg-purple-500/10 rounded-lg p-3 border border-purple-500/30">
+                <svg class="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <p class="text-purple-300 text-sm">
+                    Para cualquier aclaración o duda sobre el cuestionario, comunícate con: 
+                    <a href="mailto:courses@knowbuia.com" class="text-purple-200 font-semibold hover:text-purple-100 underline">courses@knowbuia.com</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="mt-6 glass rounded-2xl p-6">
+            <h4 class="text-white font-semibold mb-3">📋 Información Adicional</h4>
+            <ul class="text-slate-300 text-sm space-y-2 list-disc list-inside">
+                <li>El archivo JSON contiene todas tus respuestas, código escrito y estadísticas</li>
+                <li>El nombre del archivo incluye tu nombre y la fecha para fácil identificación</li>
+                <li>Asegúrate de enviar el archivo antes de la fecha límite establecida por tu instructor</li>
+            </ul>
+        </div>
+
+        <button onclick="resetQuiz()" class="mt-6 w-full bg-slate-700 text-white font-semibold py-4 rounded-xl hover:bg-slate-600 transition">
+            Realizar Nuevo Cuestionario
+        </button>
+
+        <!-- Footer KnowBu -->
+        <div class="mt-8 glass rounded-2xl p-6 text-center">
+            <div class="flex items-center justify-center gap-2 mb-2">
+                <div class="bg-gradient-to-r from-cyan-500 to-purple-500 p-1.5 rounded-lg">
+                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                    </svg>
+                </div>
+                <h2 class="text-lg font-bold bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+                    KnowBu
+                </h2>
+            </div>
+            <p class="text-slate-400 text-sm mb-1">Cuestionario - Fundamentos de Python</p>
+            <p class="text-slate-500 text-xs">© 2025 KnowBu. Todos los derechos reservados.</p>
+            <p class="text-slate-500 text-xs mt-2">
+                Contacto: <a href="mailto:courses@knowbuia.com" class="text-cyan-400 hover:text-cyan-300 underline">courses@knowbuia.com</a>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // Datos del cuestionario
+        const mcQuestions = [
+            {
+                id: 'q1',
+                question: '¿Cuál es la sintaxis correcta para imprimir "Hola Mundo" en Python?',
+                options: ['print(Hola Mundo)', 'print("Hola Mundo")', 'console.log("Hola Mundo")', 'echo "Hola Mundo"'],
+                correct: 1,
+                explanation: 'En Python, print() requiere comillas (simples o dobles) alrededor del texto que queremos mostrar.'
+            },
+            {
+                id: 'q2',
+                question: '¿Qué tipo de dato es el valor 42?',
+                options: ['str (cadena)', 'float (decimal)', 'int (entero)', 'bool (booleano)'],
+                correct: 2,
+                explanation: '42 es un número entero (int) porque no tiene punto decimal.'
+            },
+            {
+                id: 'q3',
+                question: '¿Cuál de estos es un tipo de dato booleano en Python?',
+                options: ['"True"', 'True', 'true', '1'],
+                correct: 1,
+                explanation: 'En Python, los booleanos son True y False (con mayúscula inicial). Entre comillas sería una cadena.'
+            },
+            {
+                id: 'q4',
+                question: '¿Cómo se crea una f-string en Python?',
+                options: ['print("Hola " + nombre)', 'print(f"Hola {nombre}")', 'print("Hola %s" % nombre)', 'print(`Hola ${nombre}`)'],
+                correct: 1,
+                explanation: 'Las f-strings se crean colocando una "f" antes de las comillas y usando {} para insertar variables.'
+            },
+            {
+                id: 'q5',
+                question: '¿Cuál es la forma correcta de crear una lista en Python?',
+                options: ['lista = (1, 2, 3)', 'lista = {1, 2, 3}', 'lista = [1, 2, 3]', 'lista = <1, 2, 3>'],
+                correct: 2,
+                explanation: 'Las listas en Python se crean usando corchetes []. Los paréntesis son para tuplas y las llaves para sets o diccionarios.'
+            },
+            {
+                id: 'q6',
+                question: '¿Qué imprime este código? x = 3.14; print(type(x))',
+                options: ["&lt;class 'int'&gt;", "&lt;class 'float'&gt;", "&lt;class 'str'&gt;", "&lt;class 'decimal'&gt;"],
+                correct: 1,
+                explanation: '3.14 tiene punto decimal, por lo tanto es un float. type() devuelve el tipo de dato.'
+            },
+            {
+                id: 'q7',
+                question: '¿Cómo accedes al primer elemento de una lista llamada "frutas"?',
+                options: ['frutas[1]', 'frutas.first()', 'frutas[0]', 'frutas.get(0)'],
+                correct: 2,
+                explanation: 'En Python, los índices comienzan en 0, así que frutas[0] accede al primer elemento.'
+            },
+            {
+                id: 'q8',
+                question: '¿Cuál es el resultado de: nombre = "Ana"; print(f"Hola {nombre}!")?',
+                options: ['Hola {nombre}!', 'Hola Ana!', 'Hola nombre!', 'Error de sintaxis'],
+                correct: 1,
+                explanation: 'La f-string reemplaza {nombre} con el valor de la variable, resultando en "Hola Ana!"'
+            },
+            {
+                id: 'q9',
+                question: '¿Qué método se usa para agregar un elemento al final de una lista?',
+                options: ['lista.add(elemento)', 'lista.append(elemento)', 'lista.insert(elemento)', 'lista.push(elemento)'],
+                correct: 1,
+                explanation: 'El método append() agrega un elemento al final de una lista en Python.'
+            },
+            {
+                id: 'q10',
+                question: '¿Cuál es el resultado de: len([1, 2, 3, 4, 5])?',
+                options: ['5', '4', '15', 'Error'],
+                correct: 0,
+                explanation: 'La función len() devuelve la cantidad de elementos en una lista. Esta lista tiene 5 elementos.'
+            },
+            {
+                id: 'q11',
+                question: '¿Qué tipo de dato es True?',
+                options: ['str', 'int', 'bool', 'None'],
+                correct: 2,
+                explanation: 'True es un valor booleano (bool), que representa verdadero/falso en Python.'
+            },
+            {
+                id: 'q12',
+                question: '¿Cómo se comenta una línea de código en Python?',
+                options: ['// comentario', '/* comentario */', '# comentario', '&lt;!-- comentario --&gt;'],
+                correct: 2,
+                explanation: 'En Python, los comentarios de una línea comienzan con el símbolo #'
+            },
+            {
+                id: 'q13',
+                question: '¿Qué imprime este código? lista = ["a", "b", "c"]; print(lista[1])?',
+                options: ['a', 'b', 'c', 'Error'],
+                correct: 1,
+                explanation: 'lista[1] accede al segundo elemento (índice 1) de la lista, que es "b".'
+            }
+        ];
+
+        const codeQuestions = [
+            {
+                id: 'c1',
+                question: 'Escribe código que imprima tu nombre completo usando print()',
+                placeholder: '# Escribe tu código aquí\nprint(...)',
+                hint: 'Usa print() con comillas alrededor de tu nombre',
+                validate: (code) => code.includes('print(') && (code.includes('"') || code.includes("'"))
+            },
+            {
+                id: 'c2',
+                question: 'Crea una variable llamada "edad" con tu edad (número) e imprímela',
+                placeholder: '# Crea la variable y luego imprímela\nedad = ...\nprint(...)',
+                hint: 'Recuerda: edad = numero_sin_comillas',
+                validate: (code) => code.includes('edad') && code.includes('print')
+            },
+            {
+                id: 'c3',
+                question: 'Crea una variable "precio" con el valor 99.99 y otra "producto" con el texto "Laptop". Usa una f-string para imprimir: "El producto cuesta $99.99"',
+                placeholder: '# Crea las variables\nprecio = ...\nproducto = ...\n# Usa f-string\nprint(f"...")',
+                hint: 'Usa f"..." y {variable} para insertar valores',
+                validate: (code) => code.includes('precio') && code.includes('producto') && code.includes('f"') && code.includes('{')
+            },
+            {
+                id: 'c4',
+                question: 'Crea una lista llamada "colores" con 3 colores diferentes e imprímela',
+                placeholder: '# Crea la lista con corchetes []\ncolores = [...]\nprint(...)',
+                hint: 'Las listas usan corchetes: ["color1", "color2", "color3"]',
+                validate: (code) => code.includes('colores') && code.includes('[') && code.includes(']')
+            },
+            {
+                id: 'c5',
+                question: 'Crea una lista "numeros" con [10, 20, 30] e imprime solo el primer elemento',
+                placeholder: '# Crea la lista\nnumeros = ...\n# Imprime el primer elemento usando índice\nprint(...)',
+                hint: 'El primer elemento está en el índice 0: lista[0]',
+                validate: (code) => code.includes('numeros') && code.includes('[0]')
+            },
+            {
+                id: 'c6',
+                question: '🌟 DESAFÍO OPCIONAL: Crea un programa que calcule el promedio de tres calificaciones. Crea variables cal1, cal2, cal3 con valores numéricos, calcula el promedio, y muestra un mensaje usando f-string que diga "El promedio es: X"',
+                placeholder: '# Crea las tres calificaciones\ncal1 = ...\ncal2 = ...\ncal3 = ...\n# Calcula el promedio\npromedio = ...\n# Imprime el resultado con f-string\nprint(f"...")',
+                hint: 'El promedio se calcula sumando las tres calificaciones y dividiendo entre 3: (cal1 + cal2 + cal3) / 3',
+                validate: (code) => code.includes('cal1') && code.includes('cal2') && code.includes('cal3') && code.includes('promedio') && code.includes('f"') && code.includes('/'),
+                optional: true
+            }
+        ];
+
+        // Estado de la aplicación
+        let studentData = {};
+        let mcAnswers = {};
+        let codeAnswers = {};
+
+        // Inicializar fecha
+        window.addEventListener('DOMContentLoaded', () => {
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('quizDate').value = today;
+        });
+
+        // Funciones
+        function startQuiz() {
+            const name = document.getElementById('studentName').value.trim();
+            const lastName = document.getElementById('studentLastName').value.trim();
+            const date = document.getElementById('quizDate').value;
+
+            if (!name || !lastName) {
+                alert('Por favor completa todos los campos');
+                return;
+            }
+
+            studentData = { name, lastName, date };
+            
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('multipleChoiceSection').classList.remove('hidden');
+            
+            renderMCQuestions();
+        }
+
+        function renderMCReview() {
+            const container = document.getElementById('mcReview');
+            container.innerHTML = '';
+
+            mcQuestions.forEach((q, idx) => {
+                const isCorrect = mcAnswers[q.id] === q.correct;
+                const div = document.createElement('div');
+                div.className = 'mb-6 last:mb-0';
+                
+                const checkIcon = `<svg class="w-6 h-6 text-green-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+                const xIcon = `<svg class="w-6 h-6 text-red-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+                
+                div.innerHTML = `
+                    <div class="flex items-start gap-3 mb-2">
+                        ${isCorrect ? checkIcon : xIcon}
+                        <div class="flex-1">
+                            <p class="text-white font-medium mb-2">${idx + 1}. ${q.question}</p>
+                            <p class="${isCorrect ? 'text-green-400' : 'text-red-400'} text-sm mb-1">
+                                Tu respuesta: ${q.options[mcAnswers[q.id]]}
+                            </p>
+                            ${!isCorrect ? `
+                                <p class="text-green-400 text-sm mb-2">
+                                    Respuesta correcta: ${q.options[q.correct]}
+                                </p>
+                            ` : ''}
+                            <p class="text-slate-300 text-sm bg-slate-700/30 rounded-lg p-3 mt-2">
+                                📚 ${q.explanation}
+                            </p>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function renderCodeReview() {
+            const container = document.getElementById('codeReview');
+            container.innerHTML = '';
+
+            codeQuestions.forEach((q, idx) => {
+                const isCorrect = codeAnswers[q.id] && q.validate(codeAnswers[q.id]);
+                const div = document.createElement('div');
+                div.className = 'mb-6 last:mb-0';
+                
+                const checkIcon = `<svg class="w-6 h-6 text-green-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+                const xIcon = `<svg class="w-6 h-6 text-red-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
+                const starIcon = `<svg class="w-6 h-6 text-yellow-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>`;
+                
+                div.innerHTML = `
+                    <div class="flex items-start gap-3 mb-2">
+                        ${q.optional && isCorrect ? starIcon : (isCorrect ? checkIcon : xIcon)}
+                        <div class="flex-1">
+                            <p class="text-white font-medium mb-2">Ejercicio ${idx + 1}${q.optional ? ' (OPCIONAL - BONUS)' : ''}: ${q.question}</p>
+                            <p class="${isCorrect ? (q.optional ? 'text-yellow-400' : 'text-green-400') : 'text-red-400'} text-sm mb-2">
+                                ${isCorrect ? (q.optional ? '⭐ ¡Excelente! Completaste el ejercicio bonus' : '✓ Código validado correctamente') : (q.optional && !codeAnswers[q.id] ? 'Ejercicio opcional no realizado' : '✗ El código no cumple con los requisitos')}
+                            </p>
+                            <div class="bg-slate-900/50 rounded-lg p-3 mt-2">
+                                <p class="text-slate-400 text-xs mb-1">Tu código:</p>
+                                <pre class="text-green-400 text-sm font-mono whitespace-pre-wrap">${codeAnswers[q.id] || 'Sin respuesta'}</pre>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function exportResults() {
+            const results = calculateResults();
+            const exportData = {
+                estudiante: {
+                    nombre: studentData.name,
+                    apellido: studentData.lastName,
+                    fecha: studentData.date
+                },
+                resultados: {
+                    opcionMultiple: {
+                        correctas: results.mcCorrect,
+                        total: 13,
+                        porcentaje: Math.round((results.mcCorrect / 13) * 100)
+                    },
+                    codigo: {
+                        correctas: results.codeCorrect,
+                        total: 5,
+                        porcentaje: Math.round((results.codeCorrect / 5) * 100),
+                        bonus: results.bonusCorrect
+                    },
+                    general: {
+                        correctas: results.total,
+                        total: results.max,
+                        porcentaje: Math.round((results.total / results.max) * 100)
+                    }
+                },
+                respuestasOpcionMultiple: mcQuestions.map(q => ({
+                    pregunta: q.question,
+                    respuestaEstudiante: q.options[mcAnswers[q.id]] || 'Sin respuesta',
+                    respuestaCorrecta: q.options[q.correct],
+                    correcta: mcAnswers[q.id] === q.correct
+                })),
+                respuestasCodigo: codeQuestions.map(q => ({
+                    pregunta: q.question,
+                    codigo: codeAnswers[q.id] || 'Sin respuesta',
+                    correcta: codeAnswers[q.id] && q.validate(codeAnswers[q.id]),
+                    opcional: q.optional || false
+                }))
+            };
+
+            const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `cuestionario_${studentData.lastName}_${studentData.name}_${studentData.date}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            alert('¡Archivo descargado exitosamente! Envíalo a tu instructor.');
+        }
+
+        function resetQuiz() {
+            studentData = {};
+            mcAnswers = {};
+            codeAnswers = {};
+            
+            document.getElementById('studentName').value = '';
+            document.getElementById('studentLastName').value = '';
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('quizDate').value = today;
+            
+            document.getElementById('resultsSection').classList.add('hidden');
+            document.getElementById('startScreen').classList.remove('hidden');
+            document.getElementById('improvementAlert').classList.add('hidden');
+            
+            document.getElementById('mcProgress').textContent = '0';
+            document.getElementById('mcProgressBar').style.width = '0%';
+            document.getElementById('codeProgress').textContent = '0';
+            document.getElementById('codeProgressBar').style.width = '0%';
+            
+            renderMCQuestions();
+        }
+
+        function renderMCQuestions() {
+            const container = document.getElementById('mcQuestions');
+            container.innerHTML = '';
+
+            mcQuestions.forEach((q, idx) => {
+                const div = document.createElement('div');
+                div.className = 'glass rounded-2xl p-6 shadow-xl';
+                
+                let optionsHTML = '';
+                q.options.forEach((opt, optIdx) => {
+                    const isSelected = mcAnswers[q.id] === optIdx;
+                    optionsHTML += `
+                        <label class="block p-4 rounded-xl border-2 cursor-pointer transition ${
+                            isSelected
+                                ? 'border-cyan-500 bg-cyan-500/10'
+                                : 'border-slate-600 bg-slate-700/30 hover:border-slate-500'
+                        }">
+                            <input type="radio" name="${q.id}" value="${optIdx}" 
+                                ${isSelected ? 'checked' : ''}
+                                onchange="selectMCAnswer('${q.id}', ${optIdx})" class="mr-3">
+                            <span class="text-white">${opt}</span>
+                        </label>
+                    `;
+                });
+
+                div.innerHTML = `
+                    <h3 class="text-xl font-semibold text-white mb-4">
+                        <span class="text-cyan-400 mr-2">${idx + 1}.</span>
+                        ${q.question}
+                    </h3>
+                    <div class="space-y-3">
+                        ${optionsHTML}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function selectMCAnswer(questionId, answerIdx) {
+            mcAnswers[questionId] = answerIdx;
+            updateMCProgress();
+            renderMCQuestions();
+        }
+
+        function updateMCProgress() {
+            const answered = Object.keys(mcAnswers).length;
+            document.getElementById('mcProgress').textContent = answered;
+            document.getElementById('mcProgressBar').style.width = (answered / 13) * 100 + '%';
+            
+            const btn = document.getElementById('continueToCoding');
+            if (answered >= 13) {
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                btn.classList.add('cursor-pointer');
+            } else {
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+                btn.classList.remove('cursor-pointer');
+            }
+        }
+
+        function goToCoding() {
+            if (Object.keys(mcAnswers).length < 13) {
+                alert('Por favor responde todas las preguntas antes de continuar');
+                return;
+            }
+            
+            document.getElementById('multipleChoiceSection').classList.add('hidden');
+            document.getElementById('codingSection').classList.remove('hidden');
+            renderCodeQuestions();
+        }
+
+        function renderCodeQuestions() {
+            const container = document.getElementById('codeQuestions');
+            container.innerHTML = '';
+
+            codeQuestions.forEach((q, idx) => {
+                const div = document.createElement('div');
+                div.className = 'glass rounded-2xl p-6 shadow-xl' + (q.optional ? ' border-2 border-yellow-500/30' : '');
+                div.innerHTML = `
+                    <h3 class="text-xl font-semibold text-white mb-4">
+                        <span class="text-purple-400 mr-2">Ejercicio ${idx + 1}${q.optional ? ' (OPCIONAL)' : ''}:</span>
+                        ${q.question}
+                    </h3>
+                    <textarea id="${q.id}" oninput="updateCodeAnswer('${q.id}')" 
+                        class="w-full bg-slate-900/50 border border-slate-600 rounded-xl px-4 py-3 text-green-400 font-mono text-sm focus:outline-none focus:border-purple-500 transition min-h-32"
+                        placeholder="${q.placeholder}">${codeAnswers[q.id] || ''}</textarea>
+                    <div class="mt-3 flex items-start gap-2 bg-purple-500/10 rounded-lg p-3 border border-purple-500/30">
+                        <svg class="w-5 h-5 text-purple-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p class="text-purple-300 text-sm">
+                            <strong>Pista:</strong> ${q.hint}
+                        </p>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function updateCodeAnswer(questionId) {
+            const code = document.getElementById(questionId).value;
+            codeAnswers[questionId] = code;
+            updateCodeProgress();
+        }
+
+        function updateCodeProgress() {
+            const requiredQuestions = codeQuestions.filter(q => !q.optional);
+            const answeredRequired = requiredQuestions.filter(q => codeAnswers[q.id] && codeAnswers[q.id].trim()).length;
+            document.getElementById('codeProgress').textContent = answeredRequired;
+            document.getElementById('codeProgressBar').style.width = (answeredRequired / 5) * 100 + '%';
+            
+            const btn = document.getElementById('showResultsBtn');
+            if (answeredRequired >= 5) {
+                btn.classList.remove('opacity-50', 'cursor-not-allowed');
+                btn.classList.add('cursor-pointer');
+            } else {
+                btn.classList.add('opacity-50', 'cursor-not-allowed');
+                btn.classList.remove('cursor-pointer');
+            }
+        }
+
+        function calculateResults() {
+            let mcCorrect = 0;
+            let codeCorrect = 0;
+            let bonusCorrect = 0;
+
+            mcQuestions.forEach(q => {
+                if (mcAnswers[q.id] === q.correct) mcCorrect++;
+            });
+
+            codeQuestions.forEach(q => {
+                if (codeAnswers[q.id] && q.validate(codeAnswers[q.id])) {
+                    if (q.optional) {
+                        bonusCorrect++;
+                    } else {
+                        codeCorrect++;
+                    }
+                }
+            });
+
+            return {
+                mcCorrect,
+                codeCorrect,
+                bonusCorrect,
+                total: mcCorrect + codeCorrect + bonusCorrect,
+                max: 18,
+                maxRequired: 18
+            };
+        }
+
+        function showResults() {
+            const requiredQuestions = codeQuestions.filter(q => !q.optional);
+            const answeredRequired = requiredQuestions.filter(q => codeAnswers[q.id] && codeAnswers[q.id].trim()).length;
+            
+            if (answeredRequired < 5) {
+                alert('Por favor completa todos los ejercicios de código requeridos antes de continuar');
+                return;
+            }
+            
+            const results = calculateResults();
+            const percentage = Math.round((results.total / results.max) * 100);
+
+            document.getElementById('codingSection').classList.add('hidden');
+            document.getElementById('resultsSection').classList.remove('hidden');
+
+            document.getElementById('studentInfo').textContent = 
+                `${studentData.name} ${studentData.lastName} - ${studentData.date}`;
+            
+            document.getElementById('mcScore').textContent = results.mcCorrect;
+            document.getElementById('mcPercent').textContent = Math.round((results.mcCorrect / 13) * 100);
+            
+            document.getElementById('codeScore').textContent = results.codeCorrect;
+            document.getElementById('bonusScore').textContent = results.bonusCorrect;
+            document.getElementById('codePercent').textContent = Math.round((results.codeCorrect / 5) * 100);
+            
+            document.getElementById('totalScore').textContent = results.total;
+            document.getElementById('totalPercent').textContent = percentage;
+
+            if (percentage < 70) {
+                document.getElementById('improvementAlert').classList.remove('hidden');
+            }
+
+            renderMCReview();
+            renderCodeReview();
+        }
+    </script>
+</body>
+</html>
